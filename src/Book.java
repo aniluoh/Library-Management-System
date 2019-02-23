@@ -156,9 +156,9 @@ public class Book extends JFrame {
 				ps.setString(4, textField_2.getText());
 				ps.setInt(5, Integer.parseInt(textField_3.getText()));
 				ps.setInt(6,Integer.parseInt(textField_4.getText()));
-				JOptionPane.showMessageDialog(null, "Book added sucessfully");
 				ps.executeUpdate();
 				ps.close();
+				JOptionPane.showMessageDialog(null, "Book added sucessfully");
 				setVisible(false);
 			}catch(Exception e1) {
 				e1.printStackTrace();

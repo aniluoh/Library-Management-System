@@ -4,6 +4,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 /**
 *	@Author 			: Anil Chaurasiya
@@ -37,11 +42,27 @@ public class Home extends JFrame {
 	 */
 	public Home() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 710, 555);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setBorder(new TitledBorder(new LineBorder(new Color(255, 0, 0), 5), "Home", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 255)));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton btnAddBook = new JButton("Add Book");
+		btnAddBook.setBounds(153, 283, 130, 30);
+		contentPane.add(btnAddBook);
+		
+		JButton btnNewStudent = new JButton("Add Student");
+		btnNewStudent.setBounds(424, 283, 130, 30);
+		contentPane.add(btnNewStudent);
+		
+		JButton btnIssueBook = new JButton("Issue Book");
+		btnIssueBook.setBounds(153, 401, 130, 30);
+		contentPane.add(btnIssueBook);
+		
+		JButton btnReturnBook = new JButton("Return Book");
+		btnReturnBook.setBounds(424, 401, 130, 30);
+		contentPane.add(btnReturnBook);
+		
 	}
-
 }
