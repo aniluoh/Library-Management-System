@@ -1,0 +1,14 @@
+Library MAnagement System Table
+
+create table Login(Username varchar(10) primary key not null, Password varchar(10) not null);
+
+create table Forget Password(Username varchar(10) not null, Name varchar(10) not null, , Answer varchar(10), Password varchar(10) not null );
+
+create table Account( Username varchar(15) primary key not null, Name char(15), Password int(15) , Security_Question char(15), Answer char(15));
+
+create table Book(BookID int(6) primary key, Name char(50), Edition int(2) not null, Publisher char(20) not null, Price float(5), Pages int(4) not null )
+
+create table Student(StudentId int(5) primary key, Name char(10) not null, FatherName char(20) not null, Course char(5) not null, Branch char(5) not null, Year int(1) not null, Semester int(2) not null );
+
+create table ReturnBook(StudentId int(5) primary key, Name char(20) not null, FatherName char(20) not null, Course char(5) not null, Branch char(10) not null, Year int(1) not null, Semester int(2) not null );
+
