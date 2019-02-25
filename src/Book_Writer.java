@@ -8,11 +8,11 @@ public class Book_Writer {
 
 	public String bookId(){
 		// TODO Auto-generated method stub
-		S_ID sid= new S_ID();
-		String update = sid.doIncrement();
+		Book_ID bookID= new Book_ID();
+		String update = bookID.doIncrement();
 		Writer wr;
 		try {
-			wr = new FileWriter("Student_ID.txt");
+			wr = new FileWriter("BookID.txt");
 			wr.write(update);
 			wr.close();
 		} catch (IOException e) {
