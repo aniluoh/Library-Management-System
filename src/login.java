@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.security.Signer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -85,8 +86,8 @@ public class login extends JFrame {
 					resultSet.close();
 					ps.close();
 					setVisible(false);
-					Loading loading = new Loading();
-					loading.setVisible(true);
+					Home home = new Home();
+					home.setVisible(true);
 				}else {
 					JOptionPane.showConfirmDialog(null, "Incoreect Username and Password");
 				}

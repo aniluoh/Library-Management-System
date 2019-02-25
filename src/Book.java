@@ -110,11 +110,21 @@ public class Book extends JFrame {
 		});*/
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				Home home = new Home();
+				home.setVisible(true);
+			}
+		});
 		btnBack.setBackground(new Color(255, 0, 0));
 		btnBack.setBounds(255, 220, 117, 25);
 		contentPane.add(btnBack);
 		
 		textField = new JTextField();
+		Book_Writer  bWriter = new Book_Writer();
+		String update = bWriter.bookId();
+		textField.setText(update);
 		textField.setBounds(220, 35, 175, 19);
 		contentPane.add(textField);
 		textField.setColumns(10);

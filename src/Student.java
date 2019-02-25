@@ -101,6 +101,11 @@ public class Student extends JFrame {
 		contentPane.add(lblSemester);
 		
 		textField = new JTextField();
+		
+		
+		S_writer s_id = new S_writer();
+		String update = s_id.studentId();
+		textField.setText(update);
 		textField.setBounds(225, 30, 150, 18);
 		contentPane.add(textField);
 		textField.setColumns(10);
@@ -164,6 +169,13 @@ public class Student extends JFrame {
 		contentPane.add(btnRegister);
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				Home home = new Home();
+				home.setVisible(true);
+			}
+		});
 		btnBack.setBackground(Color.RED);
 		btnBack.setBounds(245, 225, 120, 25);
 		contentPane.add(btnBack);

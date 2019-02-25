@@ -8,12 +8,19 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.awt.event.ActionEvent;
 
 /**
@@ -221,6 +228,8 @@ public class IssueBook extends JFrame {
 		contentPane.add(lblDateOfIssue);
 		
 		textField_12 = new JTextField();
+		String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
+		textField_12.setText(timeStamp);
 		textField_12.setBounds(350, 320, 150, 20);
 		contentPane.add(textField_12);
 		textField_12.setColumns(10);
@@ -231,6 +240,13 @@ public class IssueBook extends JFrame {
 		contentPane.add(btnIssue);
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				Home home = new Home();
+				home.setVisible(true);
+			}
+		});
 		btnBack.setBackground(new Color(255, 0, 0));
 		btnBack.setBounds(371, 352, 117, 25);
 		contentPane.add(btnBack);

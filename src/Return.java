@@ -13,6 +13,10 @@ import java.awt.Rectangle;
 import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.awt.event.ActionEvent;
 
 /**
 *	@Author 			: Anil Chaurasiya
@@ -107,6 +111,13 @@ public class Return extends JFrame {
 		contentPane.add(btnReturn);
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				Home home = new Home();
+				home.setVisible(true);
+			}
+		});
 		btnBack.setBounds(529, 285, 117, 25);
 		contentPane.add(btnBack);
 		
@@ -146,6 +157,8 @@ public class Return extends JFrame {
 		textField_6.setColumns(10);
 		
 		textField_7 = new JTextField();
+		String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
+		textField_7.setText(timeStamp);
 		textField_7.setBounds(417, 221, 114, 17);
 		contentPane.add(textField_7);
 		textField_7.setColumns(10);
