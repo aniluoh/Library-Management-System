@@ -92,23 +92,6 @@ public class Book extends JFrame {
 		lblPages.setBounds(50, 185, 70, 15);
 		contentPane.add(lblPages);
 		
-		/*JButton btnAdd = new JButton("Add");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-				String sql ="insert into Book(BookId,Name,Edition,Publisher,Price,Pages)values(?,?,?,?,?,?)";
-				ps = con.prepareStatement(sql);
-				ps.setInt(1,Integer.parseInt(textField.getText()));
-				ps.setString(2,textField_1.getText());
-				ps.setString(3,(String)comboBox.getSelectedItem());
-//				ps.setString(4, (String)comboBox.getSelectedItem());
-				ps.setString(4, textField_3.getText());
-			}catch(Exception e1) {
-				e1.printStackTrace();
-			}
-			}
-		});*/
-		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

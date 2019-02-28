@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -50,6 +51,7 @@ public class IssueBook extends JFrame {
 	private Connection con;
 	private PreparedStatement ps;
 	private ResultSet resultSet;
+	private JTextField textField_14;
 	/**
 	 * Launch the application.
 	 */
@@ -69,6 +71,7 @@ public class IssueBook extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+
 	public void searchBook() {
 		String search_BookId = textField_13.getText();
 		String sql = "select * from Book where BookId='"+search_BookId+"'";
@@ -78,8 +81,32 @@ public class IssueBook extends JFrame {
 			resultSet = ps.executeQuery();
 			if(resultSet.next()) {
 //				textField.setText(resultSet.getText());
-//				textField_1.setText(resultSet.getText());
+				textField_1.setText(resultSet.getString(2));
+				textField_2.setText(resultSet.getString(3));
+				textField_3.setText(resultSet.getString(4));
+				textField_4.setText(resultSet.getString(5));
+//				textField_5.setText(resultSet.getString(6));
+				textField.setText(resultSet.getString(6));
 				
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void searchStudent() {
+		String search_StudentID = textField_5.getText();
+		String sql = "select * from Student where StudentId='"+search_StudentID+"'";
+		System.out.println(sql);
+		try {
+			ps = con.prepareStatement(sql);
+			resultSet = ps.executeQuery();
+			if(resultSet.next()) {
+				textField_6.setText(resultSet.getString(2));
+				textField_7.setText(resultSet.getString(3));
+				textField_8.setText(resultSet.getString(4));
+				textField_9.setText(resultSet.getString(5));
+				textField_10.setText(resultSet.getString(6));
+				textField_11.setText(resultSet.getString(7));
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -87,7 +114,10 @@ public class IssueBook extends JFrame {
 	}
 	
 	public IssueBook() {
+		super("Issue Book");
 		setResizable(false);
+		setAlwaysOnTop(true);
+		con = ConnectJava.connectDB();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 765, 470);
 		contentPane = new JPanel();
@@ -126,32 +156,38 @@ public class IssueBook extends JFrame {
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				searchBook();
 			}
 		});
-		btnSearch.setBounds(270, 70, 85, 20);
+		btnSearch.setBounds(265, 70, 83, 20);
 		contentPane.add(btnSearch);
 		
 		textField = new JTextField();
+		textField.setEnabled(false);
 		textField.setBounds(200, 245, 150, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
+		textField_1.setEnabled(false);
 		textField_1.setBounds(200, 106, 150, 20);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
 		textField_2 = new JTextField();
+		textField_2.setEnabled(false);
 		textField_2.setBounds(200, 141, 150, 20);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
+		textField_3.setEnabled(false);
 		textField_3.setBounds(200, 175, 150, 20);
 		contentPane.add(textField_3);
 		textField_3.setColumns(10);
 		
 		textField_4 = new JTextField();
+		textField_4.setEnabled(false);
 		textField_4.setBounds(200, 210, 150, 20);
 		contentPane.add(textField_4);
 		textField_4.setColumns(10);
@@ -185,39 +221,45 @@ public class IssueBook extends JFrame {
 		contentPane.add(lblSemester);
 		
 		textField_5 = new JTextField();
-		textField_5.setBounds(566, 70, 150, 20);
+		textField_5.setBounds(566, 70, 64, 20);
 		contentPane.add(textField_5);
 		textField_5.setColumns(10);
 		
 		textField_6 = new JTextField();
+		textField_6.setEnabled(false);
 		textField_6.setBounds(566, 106, 150, 20);
 		contentPane.add(textField_6);
 		textField_6.setColumns(10);
 		
 		textField_7 = new JTextField();
+		textField_7.setEnabled(false);
 		textField_7.setBounds(566, 140, 150, 19);
 		contentPane.add(textField_7);
 		textField_7.setColumns(10);
 		
 		textField_8 = new JTextField();
+		textField_8.setEnabled(false);
 		textField_8.setText("");
 		textField_8.setBounds(566, 175, 150, 20);
 		contentPane.add(textField_8);
 		textField_8.setColumns(10);
 		
 		textField_9 = new JTextField();
+		textField_9.setEnabled(false);
 		textField_9.setText("");
 		textField_9.setBounds(566, 210, 150, 20);
 		contentPane.add(textField_9);
 		textField_9.setColumns(10);
 		
 		textField_10 = new JTextField();
+		textField_10.setEnabled(false);
 		textField_10.setText("");
 		textField_10.setBounds(566, 245, 150, 20);
 		contentPane.add(textField_10);
 		textField_10.setColumns(10);
 		
 		textField_11 = new JTextField();
+		textField_11.setEnabled(false);
 		textField_11.setText("");
 		textField_11.setBounds(566, 280, 150, 20);
 		contentPane.add(textField_11);
@@ -252,18 +294,38 @@ public class IssueBook extends JFrame {
 		contentPane.add(btnBack);
 		
 		textField_13 = new JTextField();
-		textField_13.setBounds(200, 70, 70, 20);
+		textField_13.setBounds(200, 70, 64, 20);
 		contentPane.add(textField_13);
 		textField_13.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Search");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				searchStudent();
+			}
+		});
+		btnNewButton.setBounds(630, 70, 83, 20);
+		contentPane.add(btnNewButton);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(0, 100, 0), 3, true), "Student", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
+		panel_1.setBounds(400, 40, 340, 266);
+		contentPane.add(panel_1);
+		
+		JLabel lblStatus = new JLabel("Status");
+		lblStatus.setBounds(70,280,70,20);
+		contentPane.add(lblStatus);
+		
+		textField_14 = new JTextField();
+		textField_14.setBounds(200, 280, 150, 20);
+		contentPane.add(textField_14);
+		textField_14.setColumns(10);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 100, 0), 3, true), "Book", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
 		panel.setBounds(36, 40, 365, 266);
 		contentPane.add(panel);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(0, 100, 0), 3, true), "Student", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
-		panel_1.setBounds(402, 40, 340, 266);
-		contentPane.add(panel_1);
 	}
 }
+
+
