@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
@@ -75,7 +76,8 @@ public class IssueBook extends JFrame {
 	public void searchBook() {
 		String search_BookId = textField_13.getText();
 		String sql = "select * from Book where BookId='"+search_BookId+"'";
-		System.out.println(sql);
+		System.out.println("Search Book section");
+
 		try {
 			ps = con.prepareStatement(sql);
 			resultSet = ps.executeQuery();
@@ -96,7 +98,7 @@ public class IssueBook extends JFrame {
 	public void searchStudent() {
 		String search_StudentID = textField_5.getText();
 		String sql = "select * from Student where StudentId='"+search_StudentID+"'";
-		System.out.println(sql);
+		System.out.println("Search Student section");
 		try {
 			ps = con.prepareStatement(sql);
 			resultSet = ps.executeQuery();
@@ -112,6 +114,34 @@ public class IssueBook extends JFrame {
 			e.printStackTrace();
 		}
 	}
+	// Count  number of books issued at paritcular person
+	public void countBook() {
+		try {
+//			ps = con.prepareStatement(sql);
+//			select count(StudentName) form IssueBook where StudentID=ps.setInt(7, Integer.parseInt(textField_5.getText()));
+//			ps.setInt(7, Integer.parseInt(textField_5.getText()));
+			Statement statement = con.createStatement();
+			System.out.println("Hello");
+			String sql = "select count(*) from IssueBook where BookId='"+Integer.parseInt(textField_5.getText())+"'";
+			System.out.println("Java");
+			resultSet = statement.executeQuery("sql");
+			System.out.println("World");
+
+//			resultSet = statement.executeQuery("select count(*) as count from IssueBook where StudentID = Integer.parseInt(textField_5.getText())");
+			System.out.println("countBook method has been invoked");
+			int count = resultSet.getInt("count");
+			System.out.println("Count : "+count);
+			if(count>2) {
+				System.out.println("You have reached maximum limit per person. No more book can be issued on this account");
+				setVisible(false);
+				Home home = new Home();
+				setVisible(true);
+			};
+		}catch(Exception e3) {
+			e3.printStackTrace();
+		}
+	}
+	
 	
 	public IssueBook() {
 		super("Issue Book");
@@ -277,6 +307,45 @@ public class IssueBook extends JFrame {
 		textField_12.setColumns(10);
 		
 		JButton btnIssue = new JButton("Issue");
+		btnIssue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String sql = "insert into IssueBook(BookID, Name, Edition,Publisher,Price ,Pages,StudentID,StudentName, FatherName, course, Branch,Year, Semester)values(?,?,?,?,?,?,?,?,?,?,?,?,?)"; 
+
+//					System.out.println(sql);
+					ps = con.prepareStatement(sql);
+//					System.out.println("Issue Book Section ");
+					ps.setInt(1, Integer.parseInt(textField_13.getText()));// BookID
+					ps.setString(2,textField_1.getText());	//BookName
+					ps.setInt(3, Integer.parseInt(textField_2.getText()));	// Book Edition
+					ps.setString(4,textField_3.getText()); // Book Publisher
+					ps.setInt(5, Integer.parseInt(textField_4.getText()));	// Price
+					ps.setInt(6, Integer.parseInt(textField.getText()));	// Pages
+//					ps.setBoolean(7, textField_14.getText(true));	// Status
+					ps.setInt(7, Integer.parseInt(textField_5.getText()));// Student ID
+//					int numberOfBookIssued;
+					countBook();
+					System.out.println("Calling BookCounting section");
+					ps.setString(8,textField_6.getText()); // StudnetNAme
+					ps.setString(9,textField_7.getText()); // FatherName
+					ps.setString(10,textField_8.getText()); // Course
+					ps.setString(11,textField_9.getText()); // Branch
+					ps.setInt(12, Integer.parseInt(textField_10.getText()));// Year
+					ps.setInt(13, Integer.parseInt(textField_11.getText()));// Semester
+//					ps.setInt(14, Integer.parseInt(textField_12.getText()));// Date
+//					
+//					ps.executeUpdate();
+					
+					ps.executeUpdate();
+//					System.out.println("Hello");
+					JOptionPane.showMessageDialog(null, "Book Issued sucessfully");
+					ps.close();
+					setVisible(false);
+				}catch(Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		});
 		btnIssue.setBackground(new Color(0, 128, 0));
 		btnIssue.setBounds(164, 352, 117, 25);
 		contentPane.add(btnIssue);

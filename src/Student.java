@@ -145,8 +145,8 @@ public class Student extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 				String sql = "Insert into Student(StudentId,Name,FatherName,Course,Branch,Year,Semester)values(?,?,?,?,?,?,?)";
+				System.out.println(sql);
 				ps = con.prepareStatement(sql);
-				System.out.println("Hello");
 				ps.setInt(1, Integer.parseInt(textField.getText()));
 				ps.setString(2,textField_1.getText());
 				ps.setString(3, textField_2.getText());

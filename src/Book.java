@@ -153,6 +153,8 @@ public class Book extends JFrame {
 				ps.close();
 				JOptionPane.showMessageDialog(null, "Book added sucessfully");
 				setVisible(false);
+				Home home = new Home();
+				setVisible(true);
 			}catch(Exception e1) {
 				e1.printStackTrace();
 			}

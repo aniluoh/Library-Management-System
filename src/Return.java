@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -14,6 +15,9 @@ import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
@@ -43,7 +47,9 @@ public class Return extends JFrame {
 	private JTextField textField_12;
 	private JTextField textField_13;
 	private JTextField textField_14;
-
+	private Connection con;
+	private PreparedStatement ps;
+	private ResultSet resultSet; 
 	/**
 	 * Launch the application.
 	 */
@@ -59,13 +65,58 @@ public class Return extends JFrame {
 			}
 		});
 	}
-
+	
+	
+//	Fetching the data from IssueBook Table.
+	public void searchBookID() {
+		String searchBookID = textField.getText();
+//		System.out.println("serching block");
+		String sql = "select * from IssueBook where BookID='"+searchBookID+"'";
+		try {
+			ps = con.prepareStatement(sql); // Problem is arises from here...
+			resultSet = ps.executeQuery();
+			if(resultSet.next()) {
+				textField_1.setText(resultSet.getString(2));
+				textField_2.setText(resultSet.getString(3));
+				textField_3.setText(resultSet.getString(4));
+				textField_4.setText(resultSet.getString(5));
+				textField_5.setText(resultSet.getString(6));
+//				textField_6.setText(resultSet.getString(7)); // It should show the date 
+				textField_8.setText(resultSet.getString(7)); // StudentID
+				textField_9.setText(resultSet.getString(8));
+				textField_10.setText(resultSet.getString(9));
+				textField_11.setText(resultSet.getString(10));
+				textField_12.setText(resultSet.getString(11));
+				textField_13.setText(resultSet.getString(12));
+				textField_14.setText(resultSet.getString(13));
+			}
+		}catch(Exception e) {
+//			System.out.println("catch Block ");
+			e.printStackTrace();
+		}
+	}
+	
+// Deleting record from IssueBook Table;
+	public void returnBook() {
+		String bookID = textField.getText();
+		String returnBook = "delete from IssueBook where BookID='"+bookID+"'";
+		try {
+			ps = con.prepareStatement(returnBook); 
+			ps.executeUpdate();
+			JOptionPane.showMessageDialog(null, "Book has been returned sucessfully");
+		}catch(Exception e) {
+			System.out.println("Catch Block");
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Create the frame.
 	 */
 	public Return() {
 		setResizable(false);
 		setAlwaysOnTop(true);
+		con = ConnectJava.connectDB();
 		setTitle("Return");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 786, 379);
@@ -74,40 +125,46 @@ public class Return extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblStudentId = new JLabel("Student ID");
-		lblStudentId.setBounds(81, 23, 100, 17);
+		JLabel lblStudentId = new JLabel("Book ID");
+		lblStudentId.setBounds(81, 35, 100, 20);
 		contentPane.add(lblStudentId);
 		
 		JLabel lblName = new JLabel("Name");
-		lblName.setBounds(81, 48, 100, 17);
+		lblName.setBounds(81, 65, 100, 20);
 		contentPane.add(lblName);
 		
-		JLabel lblFatherName = new JLabel("Father Name");
-		lblFatherName.setBounds(81, 75, 100, 17);
+		JLabel lblFatherName = new JLabel("Edition");
+		lblFatherName.setBounds(81, 95, 100, 20);
 		contentPane.add(lblFatherName);
 		
-		JLabel lblNewLabel = new JLabel("Course");
-		lblNewLabel.setBounds(81, 98, 70, 17);
+		JLabel lblNewLabel = new JLabel("Publisher");
+		lblNewLabel.setBounds(81, 125, 70, 20);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblBranch = new JLabel("Branch");
-		lblBranch.setBounds(81, 123, 100, 17);
+		JLabel lblBranch = new JLabel("Price");
+		lblBranch.setBounds(81, 155, 100, 20);
 		contentPane.add(lblBranch);
 		
-		JLabel lblYear = new JLabel("Year");
-		lblYear.setBounds(81, 148, 100, 17);
+		JLabel lblYear = new JLabel("Pages");
+		lblYear.setBounds(81, 185, 100, 20);
 		contentPane.add(lblYear);
 		
-		JLabel lblSemester = new JLabel("Semester");
-		lblSemester.setBounds(81, 171, 100, 17);
+		JLabel lblSemester = new JLabel("Date of Issue");
+		lblSemester.setBounds(81, 215, 100, 20);
 		contentPane.add(lblSemester);
 		
 		JLabel lblReurnDate = new JLabel("Reurn Date");
-		lblReurnDate.setBounds(258, 221, 90, 17);
+		lblReurnDate.setBounds(290, 260, 90, 20);
 		contentPane.add(lblReurnDate);
 		
 		JButton btnReturn = new JButton("Return");
-		btnReturn.setBounds(252, 285, 117, 25);
+		btnReturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				returnBook();
+				
+			}
+		});
+		btnReturn.setBounds(252, 295, 117, 25);
 		contentPane.add(btnReturn);
 		
 		JButton btnBack = new JButton("Back");
@@ -118,112 +175,121 @@ public class Return extends JFrame {
 				home.setVisible(true);
 			}
 		});
-		btnBack.setBounds(529, 285, 117, 25);
+		btnBack.setBounds(529, 295, 117, 25);
 		contentPane.add(btnBack);
 		
 		textField = new JTextField();
-		textField.setBounds(245, 22, 150, 17);
+		textField.setBounds(245, 35, 65, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(245, 47, 150, 17);
+		textField_1.setBounds(245, 65, 150, 20);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
 		textField_2 = new JTextField();
-		textField_2.setBounds(245, 74, 150, 17);
+		textField_2.setBounds(245, 95, 150, 20);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
-		textField_3.setBounds(245, 97, 150, 17);
+		textField_3.setBounds(245, 125, 150, 20);
 		contentPane.add(textField_3);
 		textField_3.setColumns(10);
 		
 		textField_4 = new JTextField();
-		textField_4.setBounds(245, 122, 150, 17);
+		textField_4.setBounds(245, 155, 150, 20);
 		contentPane.add(textField_4);
 		textField_4.setColumns(10);
 		
 		textField_5 = new JTextField();
-		textField_5.setBounds(245, 147, 150, 17);
+		textField_5.setBounds(245, 185, 150, 20);
 		contentPane.add(textField_5);
 		textField_5.setColumns(10);
 		
 		textField_6 = new JTextField();
-		textField_6.setBounds(245, 170, 150, 17);
+		textField_6.setBounds(245, 215, 150, 20);
 		contentPane.add(textField_6);
 		textField_6.setColumns(10);
 		
 		textField_7 = new JTextField();
 		String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
 		textField_7.setText(timeStamp);
-		textField_7.setBounds(417, 221, 114, 17);
+		textField_7.setBounds(422, 260, 114, 20);
 		contentPane.add(textField_7);
 		textField_7.setColumns(10);
 		
-		JLabel lblBookId = new JLabel("Book ID");
-		lblBookId.setBounds(496, 24, 70, 15);
+		JLabel lblBookId = new JLabel("Student ID");
+		lblBookId.setBounds(496, 35, 80, 20);
 		contentPane.add(lblBookId);
 		
 		JLabel lblName_1 = new JLabel("Name");
-		lblName_1.setBounds(496, 49, 70, 15);
+		lblName_1.setBounds(496, 65, 70, 19);
 		contentPane.add(lblName_1);
 		
-		JLabel lblEdition = new JLabel("Edition");
-		lblEdition.setBounds(496, 76, 70, 15);
+		JLabel lblEdition = new JLabel("Father Name");
+		lblEdition.setBounds(496, 95, 95, 20);
 		contentPane.add(lblEdition);
 		
-		JLabel lblPublisher = new JLabel("Publisher");
-		lblPublisher.setBounds(496, 99, 70, 15);
+		JLabel lblPublisher = new JLabel("Course");
+		lblPublisher.setBounds(496, 125, 70, 20);
 		contentPane.add(lblPublisher);
 		
-		JLabel lblPrice = new JLabel("Price");
-		lblPrice.setBounds(496, 124, 70, 15);
+		JLabel lblPrice = new JLabel("Branch");
+		lblPrice.setBounds(496, 155, 70, 20);
 		contentPane.add(lblPrice);
 		
-		JLabel lblPages = new JLabel("Pages");
-		lblPages.setBounds(496, 149, 70, 15);
+		JLabel lblPages = new JLabel("Year");
+		lblPages.setBounds(496, 185, 70, 20);
 		contentPane.add(lblPages);
 		
-		JLabel lblDateOfIssue = new JLabel("Date of Issue");
-		lblDateOfIssue.setBounds(496, 172, 110, 15);
+		JLabel lblDateOfIssue = new JLabel("Semester");
+		lblDateOfIssue.setBounds(496, 215, 110, 20);
 		contentPane.add(lblDateOfIssue);
 		
 		textField_8 = new JTextField();
-		textField_8.setBounds(645, 22, 114, 19);
+		textField_8.setBounds(645, 35, 114, 19);
 		contentPane.add(textField_8);
 		textField_8.setColumns(10);
 		
 		textField_9 = new JTextField();
-		textField_9.setBounds(645, 47, 114, 19);
+		textField_9.setBounds(645, 65, 114, 19);
 		contentPane.add(textField_9);
 		textField_9.setColumns(10);
 		
 		textField_10 = new JTextField();
-		textField_10.setBounds(645, 74, 114, 19);
+		textField_10.setBounds(645, 95, 114, 19);
 		contentPane.add(textField_10);
 		textField_10.setColumns(10);
 		
 		textField_11 = new JTextField();
-		textField_11.setBounds(645, 97, 114, 19);
+		textField_11.setBounds(645, 125, 114, 19);
 		contentPane.add(textField_11);
 		textField_11.setColumns(10);
 		
 		textField_12 = new JTextField();
-		textField_12.setBounds(645, 122, 114, 19);
+		textField_12.setBounds(645, 155, 114, 19);
 		contentPane.add(textField_12);
 		textField_12.setColumns(10);
 		
 		textField_13 = new JTextField();
-		textField_13.setBounds(645, 147, 114, 19);
+		textField_13.setBounds(645, 185, 114, 19);
 		contentPane.add(textField_13);
 		textField_13.setColumns(10);
 		
 		textField_14 = new JTextField();
-		textField_14.setBounds(645, 170, 114, 19);
+		textField_14.setBounds(645, 215, 114, 19);
 		contentPane.add(textField_14);
 		textField_14.setColumns(10);
+		
+		JButton btnNewButton = new JButton("search");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				searchBookID();
+			}
+		});
+		btnNewButton.setBounds(310, 35, 85, 20);
+		contentPane.add(btnNewButton);
 	}
 }
