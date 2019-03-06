@@ -161,7 +161,9 @@ public class Return extends JFrame {
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				returnBook();
-				
+				setVisible(false);
+				Home home = new Home();
+				home.setVisible(true);
 			}
 		});
 		btnReturn.setBounds(252, 295, 117, 25);
@@ -291,5 +293,15 @@ public class Return extends JFrame {
 		});
 		btnNewButton.setBounds(310, 35, 85, 20);
 		contentPane.add(btnNewButton);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 128, 0), 3), "Book Details", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		panel.setBounds(35, 23, 389, 225);
+		contentPane.add(panel);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(0, 128, 0), 3), "Student Details", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
+		panel_1.setBounds(422, 23, 355, 225);
+		contentPane.add(panel_1);
 	}
 }

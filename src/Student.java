@@ -158,6 +158,9 @@ public class Student extends JFrame {
 				JOptionPane.showMessageDialog(null, "New Student account has been created.");
 				ps.close();
 				setVisible(false);
+				setVisible(false);
+				Home home = new Home();
+				home.setVisible(true);
 			}catch(Exception e1) {
 				e1.printStackTrace();
 			}

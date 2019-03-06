@@ -91,7 +91,7 @@ public class Home extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				Return returnBook = new Return();
-				setVisible(true);
+				returnBook.setVisible(true);
 			}
 		});
 		btnReturnBook.setBounds(424, 405, 130, 30);
@@ -110,7 +110,7 @@ public class Home extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(SystemColor.inactiveCaptionText);
 		panel_2.setBounds(12, 12, 686, 208);
-		contentPane.add(panel_2);
+		contentPane.add(panel_2);																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	
 		panel_2.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Welcome to Library Management System");
@@ -118,6 +118,17 @@ public class Home extends JFrame {
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 28));
 		lblNewLabel.setBounds(10, 25, 665, 170);
 		panel_2.add(lblNewLabel);
+		
+		JButton btnLogout = new JButton("Logout");
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				login login = new login();
+				login.setVisible(true);
+			}
+		});
+		btnLogout.setBounds(120, 483, 85, 25);
+		contentPane.add(btnLogout);
 		
 	}
 }

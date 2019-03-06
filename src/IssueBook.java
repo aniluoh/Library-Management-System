@@ -76,7 +76,7 @@ public class IssueBook extends JFrame {
 	public void searchBook() {
 		String search_BookId = textField_13.getText();
 		String sql = "select * from Book where BookId='"+search_BookId+"'";
-		System.out.println("Search Book section");
+//		System.out.println("Search Book section");
 
 		try {
 			ps = con.prepareStatement(sql);
@@ -98,7 +98,7 @@ public class IssueBook extends JFrame {
 	public void searchStudent() {
 		String search_StudentID = textField_5.getText();
 		String sql = "select * from Student where StudentId='"+search_StudentID+"'";
-		System.out.println("Search Student section");
+//		System.out.println("Search Student section");
 		try {
 			ps = con.prepareStatement(sql);
 			resultSet = ps.executeQuery();
@@ -341,8 +341,13 @@ public class IssueBook extends JFrame {
 					JOptionPane.showMessageDialog(null, "Book Issued sucessfully");
 					ps.close();
 					setVisible(false);
+					setVisible(false);
+					Home home = new Home();
+					home.setVisible(true);
 				}catch(Exception e2) {
+					JOptionPane.showMessageDialog(null, "Sorry! for inconvenience but, This book has been already issued to someone.");
 					e2.printStackTrace();
+//					System.out.println("Problem is occuring from here");
 				}
 			}
 		});

@@ -69,17 +69,20 @@ public class Password_Forget extends JFrame {
 		}
 	}
 	public void retrieve() {
-		String a1 = textField_1.getText();// This line takes the Name from the table Account. 
-		String a2 = textField_3.getText();// This line takes the Answer from the table Account.
-		String sql = "select * from Account where Answer='"+a2+"'";
-		
+		String a1 = textField.getText();
+//		System.out.println(a1);
+		String a2 = textField_3.getText();
+		String sql = "select Password from Account where Username='"+a1+"'and Answer='"+a2+"'";
+//		System.out.println(sql);
 		try {
+			System.out.println("Hello");
 			ps = con.prepareStatement(sql);
 			resultSet = ps.executeQuery();
 //			System.out.println(resultSet.next());
 			if(resultSet.next()) {
-				System.out.println("Hello");
-				textField_4.setText(resultSet.getString(3));
+//				textField_4.setText(resultSet.getString(3));
+				textField_4.setText(resultSet.getString(1));
+				
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -1,6 +1,8 @@
 import java.io.File;
 import java.util.Scanner;
 
+// This file generates new BookID autometically each time in a sequence.
+
 public class  Book_ID {
 	int input;
 	public String doIncrement() {
